@@ -1,24 +1,25 @@
 import pytest
+import allure
 import requests
+from config import URLs
+from data.order_data import generate_order_data
 
+@allure.suite("Тесты на создание заказа")
 class TestCreateOrder:
-    base_url = "https://qa-scooter.praktikum-services.ru/api/v1/orders"
-
-    # Параметризация: 4 варианта цвета (BLACK, GREY, оба, без цвета)
-    @pytest.mark.parametrize("color", [["BLACK"], ["GREY"], ["BLACK", "GREY"], []])
+    @allure.title("Создание заказа с цветом: {color}")
+    @pytest.mark.parametrize("color", [
+        pytest.param(["BLACK"], id="BLACK"),
+        pytest.param(["GREY"], id="GREY"),
+        pytest.param(["BLACK", "GREY"], id="BLACK+GREY"),
+        pytest.param([], id="No color")
+    ])
     def test_create_order_with_different_colors(self, color):
-        payload = {
-            "firstName": "Тест",
-            "lastName": "Тестов",
-            "address": "Москва",
-            "metroStation": 4,
-            "phone": "+79999999999",
-            "rentTime": 5,
-            "deliveryDate": "2025-07-20",
-            "comment": "Тестовый заказ",
-            "color": color
-        }
+        order_data = generate_order_data(color=color)
+        response = requests.post(URLs.ORDERS, json=order_data)
 
-        response = requests.post(self.base_url, json=payload)
-        assert response.status_code == 201
-        assert "track" in response.json()
+        assert response.status_code == 201, "Неверный статус код"
+        assert "track" in response.json(), "Отсутствует track-номер"
+
+        with allure.step("Проверить что track-номер валидный"):
+            track = response.json()["track"]
+            assert isinstance(track, int) and track > 0, "Некорректный track-номер"

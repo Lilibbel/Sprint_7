@@ -4,6 +4,7 @@ import requests
 from config import URLs
 from data.order_data import generate_order_data
 
+
 @allure.suite("Тесты на создание заказа")
 class TestCreateOrder:
     @allure.title("Создание заказа с цветом: {color}")

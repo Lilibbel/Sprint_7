@@ -5,6 +5,7 @@ from data.courier_data import register_new_courier_and_return_login_password
 from config import URLs
 import requests
 
+
 @allure.suite("Тесты на авторизацию курьера")
 class TestLoginCourier:
     @allure.title("Успешная авторизация курьера")

@@ -2,7 +2,6 @@ import allure
 import requests
 from config import URLs
 
-
 @allure.suite("Тесты на получение списка заказов")
 class TestGetOrders:
     @allure.title("Получение списка заказов")

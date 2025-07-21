@@ -1,6 +1,7 @@
 import requests
 from config import URLs
 
+
 class CourierApi:
     @staticmethod
     def create_courier(login, password, first_name):

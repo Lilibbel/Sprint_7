@@ -1,7 +1,6 @@
 import pytest
 import allure
 from api.courier_api import CourierApi
-from config import URLs
 from data.courier_data import *
 
 @allure.suite("Тесты на создание курьера")

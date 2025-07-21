@@ -4,7 +4,6 @@ from data.courier_data import register_new_courier_and_return_login_password
 
 @pytest.fixture
 def create_and_delete_courier():
-    #Фикстура для создания и последующего удаления курьера
     courier_data = register_new_courier_and_return_login_password()
     yield courier_data
     # Удаление после теста

@@ -16,7 +16,6 @@ OrderData = namedtuple('OrderData', [
 
 
 def generate_order_data(color=None):
-    """Генерация тестовых данных для заказа"""
     if color is None:
         color = []
 
